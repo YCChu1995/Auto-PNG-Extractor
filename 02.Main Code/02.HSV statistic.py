@@ -2,16 +2,7 @@
 ################# Import Modules #################
 ##################################################
 import numpy as np
-from csv import writer
-from ultralytics import YOLO
 import cv2 as cv
-from matplotlib import use
-from matplotlib import pyplot as plt
-use('TkAgg')
-from sys import path
-path += ['./03.Module']
-from image_loader import load_images_list_from_directory
-from sam_model_initialization import mask_predictor_initialization
 ##################################################
 #################### Utilities ###################
 ##################################################
@@ -53,7 +44,7 @@ def ____bgr_to_hsv(bgr_value):
 def main():
     from pathlib import Path
     from os import listdir
-    path_to_directory = './01.Intput Images/Test Images/'
+    path_to_directory = './01.Input Images/Test Images/'
     ### .1 Generate the "file_name_list" within the "path_to_directory"
     file_name_list = listdir(path_to_directory)
     ###    Filter the "directory_name" from "file_name_list"

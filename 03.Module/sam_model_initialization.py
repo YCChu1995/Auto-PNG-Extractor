@@ -11,12 +11,12 @@ from segment_anything import sam_model_registry
 ### 1. Initialize the "mask_generator"
 '''
 mask_generator = mask_generator_initialization(
-                    sam_checkpoint = "./03.SAM Model/sam_vit_h_4b8939.pth",
+                    sam_checkpoint = "./03.SAM Model/sam_vit_h.pth",
                     model_type = "vit_h",
                     device = "cuda")
 '''
 def mask_generator_initialization(
-        sam_checkpoint = "./03.SAM Model/sam_vit_h_4b8939.pth",
+        sam_checkpoint = "./03.SAM Model/sam_vit_h.pth",
         model_type = "vit_h",
         device = "cuda"):
     ### .1 Initialize SAM
@@ -30,12 +30,12 @@ def mask_generator_initialization(
 ### 2. Initialize the ",mask_predictor"
 '''
 mask_predictor = mask_predictor_initialization(
-                    sam_checkpoint = "./03.SAM Model/sam_vit_h_4b8939.pth",
+                    sam_checkpoint = "./03.SAM Model/sam_vit_h.pth",
                     model_type = "vit_h",
                     device = "cuda")
 '''
 def mask_predictor_initialization(
-        sam_checkpoint = "./03.SAM Model/sam_vit_h_4b8939.pth",
+        sam_checkpoint = "./03.SAM Model/sam_vit_h.pth",
         model_type = "vit_h",
         device = "cuda"):
     ### .1 Initialize SAM

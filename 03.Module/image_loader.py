@@ -13,10 +13,10 @@ from os import listdir
 ### Local  Utilities (global)
 ### 1. Load all images within the directory with file names
 '''
-images_list, file_names_list = load_images_list_from_directory(path_to_directory='./01.Intput Images/Test Images/')
+images_list, file_names_list = load_images_list_from_directory(path_to_directory='./01.Input Images/Test Images/')
 '''
 def load_images_list_from_directory(
-        path_to_directory='./01.Intput Images/Test Images/'):
+        path_to_directory='./01.Input Images/Test Images/'):
     ### .1 Generate the "file_names_list" within the "path_to_directory"
     file_names_list = listdir(path_to_directory)
     ###    Filter the "directory_name" from "file_names_list"

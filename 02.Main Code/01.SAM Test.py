@@ -5,9 +5,6 @@ import numpy as np
 from csv import writer
 from ultralytics import YOLO
 import cv2 as cv
-from matplotlib import use
-from matplotlib import pyplot as plt
-# use('TkAgg')
 from sys import path
 path += ['./03.Module']
 from image_loader import load_images_list_from_directory
@@ -30,11 +27,10 @@ def __load_models():
     ###                5: 'bus'        (100,255,100)G_lime
     ###                6: 'train'      (100,255,100)G_lime
     ###                7: 'truck'      (100,255,100)G_lime
-    model_detection = YOLO("./03.Encoder Model/yolov8x.pt")
-    # model_segmentation = YOLO("./03.Encoder Model/yolov8x_seg.pt")
+    model_detection = YOLO("./04.Encoder Model/yolov8x.pt")
     ### .2 Load the decoder, the "mask_predictor" from SAM 
     mask_predictor = mask_predictor_initialization(
-                        sam_checkpoint = "./03.Decoder Model/sam_vit_h_4b8939.pth",
+                        sam_checkpoint = "./04.Decoder Model/sam_vit_h.pth",
                         model_type = "vit_h",
                         device = "cuda")
     ### .3 Return models
@@ -190,7 +186,10 @@ def ____draw_bboxes_vanilla(image_to_draw, decoder_result):
 '''
 decoder_mask_results_list = __mask_prediction(mask_predictor, images_list, encoder_results_list)
 '''
-def __mask_prediction(mask_predictor, images_list, encoder_results_list):
+def __mask_prediction(mask_predictor, images_list, encoder_results_list, targetClass):
+    ### .0 Determine which class to extract
+    if   targetClass == 'vehicle' : targetClassList = (1,2,3,5,7)
+    elif targetClass == 'human'   : targetClassList = (0,)
     ### .1 Prepare a list to storage results from decoder
     decoder_mask_results_list = []
     ### .2 Predict with decoder
@@ -202,6 +201,8 @@ def __mask_prediction(mask_predictor, images_list, encoder_results_list):
         for encoder_result_index in range(encoder_results_list[image_index].shape[0]):
             ### .5 Filter the one with low confidence score
             if encoder_results_list[image_index][encoder_result_index,4] < 0.75: continue
+            ###    Filter the one which is not a vehicle, 
+            if encoder_results_list[image_index][encoder_result_index,5] not in targetClassList: continue
             ### .6 Predict with prompts
             masks = mask_predictor.predict(box=encoder_results_list[image_index][encoder_result_index,:4].astype(np.uint16), multimask_output=False)[0]
             ### .7 Storage result from decoder
@@ -314,9 +315,12 @@ def ____save_hsv_to_csv_file(hsv_of_image_list, folder_to_save_image):
         csv_writer.writerows(hsv_of_image_list)
 
 ### Local Utilities (main)
-def main():
+def main(targetClass = 'vehicle'):
+    ### .0 Error check if 
+    if targetClass not in ('vehicle', 'human') :  raise BaseException('\n\033[31mPlease enter VALID input for "targetClass".\n\033[34mValid input : \'vehicle\', \'human\'\033[0m')
+
     ### .1 Load images within the directory
-    images_list, _ = load_images_list_from_directory(path_to_directory='./01.Intput Images/Test Images/')
+    images_list, _ = load_images_list_from_directory(path_to_directory='./01.Input Images/Test Images/')
 
     ### .2 Load models for encoder and decoder
     model_detection, mask_predictor = __load_models()
@@ -328,7 +332,7 @@ def main():
     __show_encoder_results(images_list, encoder_results_list)
 
     ### .5 Predict with decoder 
-    decoder_mask_results_list = __mask_prediction(mask_predictor, images_list, encoder_results_list)
+    decoder_mask_results_list = __mask_prediction(mask_predictor, images_list, encoder_results_list, targetClass)
     ###    Derive the new bounding box label
     decoder_bbox_results_list, count_detected_results = __bbox_extractor(decoder_mask_results_list)
     
@@ -340,4 +344,6 @@ def main():
 ##################################################
 #################### Main Code ###################
 ##################################################
-if __name__=='__main__':  main()
+if __name__=='__main__':  
+    main(targetClass = 'vehicle')
+    # main(targetClass = 'human')
