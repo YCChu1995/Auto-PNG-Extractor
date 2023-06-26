@@ -26,9 +26,9 @@
 
 ## 3. Sub Functions
   1. Build B.Box prompts for SAM (any pre-trained model should work, here I use Yolo V8)
-     
+     <img src="/06.Test%20Result/Encoder%20Result.PNG" height="200">
   2. Segmentation results from SAM
-
+     <img src="/06.Test%20Result/Decoder%20Result.PNG" height="200">
 ## 4. Why I store HSV with PNG files
 	...
   
