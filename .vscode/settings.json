@@ -1,6 +1,5 @@
 {
     "python.analysis.extraPaths": [
-        "/home/yuchang/OneDrive/03.Working Project/01.Paper Box + Rogot Arm Project/Module",
-        "./02.Module"
+        "./03.Module"
     ]
 }
