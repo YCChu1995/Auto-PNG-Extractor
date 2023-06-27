@@ -1,7 +1,5 @@
 # Auto-PNG-Extractor-SAM
 > This APP automatically extracts PNG images of any object of interest from any normal image.
->
-> 🚧 The code is still under organizing.
 
 ## 1. Main Function
   - ### Input :
