@@ -14,15 +14,30 @@
 
   - ### Output : 
 
-    `extracted PNG images` in [05.Saved Images](/05.Saved%20Images/)
+    `extracted PNG images` (more PNGs in [05.Saved Images](/05.Saved%20Images/))
 
     <img src="/06.Test%20Result/Extracted%20Result.PNG" height="200">
 
-## 2. Quick Start (🚧 NOT finished yet)
+## 2. Quick Start
   1. Download the whole project file
   2. Make sure the Python version `python -V` is greater than 3.10
   3. `pip install -r requirement.txt`
-  4. `Run 01.SAM Test.py` in [02.Main Code](/02.Main%20Code) → You should get results in [3.Sub Functions](#3-sub-functions)
+  4. Prepare the `YOLO  v8` as the Encoder model
+     
+     $~~~~$ Download the `YOLOv8x` at [YOLO v8 Github](https://github.com/ultralytics/ultralytics#models).
+             
+     $~~~~$ Rename the downloaded `YOLOv8x` as "yolov8x.pt"
+             
+     $~~~~$ Move the renamed `YOLOv8x` to the directory, [04.Encoder Model](/04.Encoder%20Model)
+     
+  7. Prepare the `META SAM` as the Decoder model
+     
+     $~~~~$ Download the `ViT-H SAM model` at [SAM Github](https://github.com/facebookresearch/segment-anything#model-checkpoints).
+     
+     $~~~~$ Rename the downloaded `ViT-H SAM model` as "sam_vit_h.pth"
+     
+     $~~~~$ Move the renamed `ViT-H SAM model` to the directory, [04.Decoder Model](/04.Decoder%20Model)
+  8. `Run 01.SAM Test.py` in [02.Main Code](/02.Main%20Code) → You should get results in [3.Sub Functions](#3-sub-functions)
 
 ## 3. Sub Functions
   1. Build B.Box prompts for SAM (any pre-trained model should work, here I use YOLO v8)
